@@ -16,18 +16,14 @@ sudo tar -zxpvf prometheus-2.14.0.linux-amd64.tar.gz
 cd /tmp/prometheus-2.14.0.linux-amd64
 sudo cp prometheus  /usr/local/bin
 sudo cp promtool  /usr/local/bin
-sudo cat /etc/prometheus/prometheus.yml << EOF
+sudo cat << EOF > /etc/prometheus/prometheus.yml
 # Global config
 global:
   scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute. 
   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute. 
   scrape_timeout: 15s  # scrape_timeout is set to the global default (10s).
-# A scrape configuration containing exactly one endpoint to scrape:# Here it's Prometheus itself.
 scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'prometheus'
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
     static_configs:
     - targets: ['localhost:9090']
 EOF
@@ -35,7 +31,7 @@ EOF
 sudo firewall-cmd --add-port=9090/tcp --permanent
 sudo firewall-cmd --reload
 
-sudo cat /etc/systemd/system/prometheus.service << EOF
+sudo cat << EOF > /etc/systemd/system/prometheus.service
 [Unit]
 Description=Prometheus Time Series Collection and Processing Server
 Wants=network-online.target
