@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure("2") do |config|
+
+	config.vm.define "prom" do |prom|
+		prom.vm.box = "geerlingguy/centos7"
+		prom.vm.hostname = "prometheus"
+		prom.vm.network "public_network", bridge: "Intel(R) Wireless-AC 9260 160MHz", ip: "192.168.0.100"       
+		prom.ssh.insert_key = false
+		
+		prom.vm.provider "virtualbox" do |vb|
+			vb.name = "prometheus"
+       		vb.memory = 1024
+       		vb.cpus = 1
+       		vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+   		end
+    end
+  
+end
