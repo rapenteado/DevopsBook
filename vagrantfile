@@ -10,6 +10,8 @@ Vagrant.configure("2") do |config|
 		prom.vm.network "public_network", bridge: "Intel(R) Wireless-AC 9260 160MHz", ip: "192.168.0.100"       
 		prom.ssh.insert_key = false
 		
+		prom.vm.provision "shell", path: "shell/prometheus.sh"
+		
 		prom.vm.provider "virtualbox" do |vb|
 			vb.name = "prometheus"
        		vb.memory = 1024
