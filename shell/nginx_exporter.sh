@@ -11,7 +11,7 @@ tar -xf nginx-prometheus-exporter-0.7.0-linux-amd64.tar.gz
 
 cd /tmp
 sudo tar -zxpvf nginx-prometheus-exporter-0.7.0-linux-amd64.tar.gz
-cd /tmp/nginx-prometheus-exporter-0.7.0-linux-amd64.tar.gz
+cd /tmp/nginx-prometheus-exporter-0.7.0-linux-amd64
 sudo mv nginx-prometheus-exporter nginx-exporter
 sudo cp nginx-exporter /usr/local/bin
 sudo chown nginx-exporter /usr/local/bin/nginx-exporter
@@ -32,7 +32,7 @@ Restart=on-failure
 RestartSec=5s
 
 ExecStart=/usr/local/bin/nginx-exporter \
-    -nginx.scrape-uri=http://localhost:9113/metrics
+    -nginx.scrape-uri=http://192.168.0.111:9113/metrics
 
 [Install]
 WantedBy=multi-user.target

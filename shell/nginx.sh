@@ -1,7 +1,8 @@
 # adding repository and installing nginx		
-yum update
 
-yum install nginx -y
+apt update
+
+apt install nginx -y
 
 sudo cat << EOF > /etc/nginx/conf.d/nginx_export.conf
 server {

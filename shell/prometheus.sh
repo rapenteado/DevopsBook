@@ -24,17 +24,17 @@ global:
 scrape_configs:
   - job_name: 'host_server'
     static_configs:
-    - targets: ['0.0.0.0:9110']
+    - targets: ['192.168.0.100:9110','192.168.0.110:9110','192.168.0.111:9110']
       labels:
         alias: host_server
   - job_name: mysql
     static_configs:
-    - targets: ['0.0.0.0:9114']
+    - targets: ['192.168.0.110:9114']
       labels:
         alias: mysql_server
   - job_name: nginx
     static_configs:
-      - targets: ['0.0.0.0:9113']
+      - targets: ['192.168.0.111:9113']
         labels:
           alias: nginx_server
 EOF

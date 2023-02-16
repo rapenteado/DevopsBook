@@ -28,14 +28,11 @@ Group=node_exporter
 Type=simple
 Restart=on-failure
 ExecStart=/usr/bin/node_exporter \
-  --web.listen-address=:9110
+  --web.listen-address=:9200
 
 [Install]
 WantedBy=multi-user.target
 EOF
-
-sudo firewall-cmd --add-port=9110/tcp --permanent
-sudo firewall-cmd --reload
 
 sudo systemctl daemon-reload
 sudo systemctl start node_exporter.service
