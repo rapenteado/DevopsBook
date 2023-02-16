@@ -1,8 +1,7 @@
 #!/bin/bash
 
-sudo yum update -y
-sudo yum install epel-release -y
-sudo yum install git zip unzip -y
+sudo apt update -y
+sudo apt install git zip unzip -y
 
 sudo useradd -m -s /bin/false prometheus
 sudo mkdir /etc/prometheus
@@ -23,13 +22,22 @@ global:
   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute. 
   scrape_timeout: 15s  # scrape_timeout is set to the global default (10s).
 scrape_configs:
-  - job_name: 'prometheus'
+  - job_name: 'host_server'
     static_configs:
-    - targets: ['localhost:9090']
+    - targets: ['0.0.0.0:9110']
+      labels:
+        alias: host_server
+  - job_name: mysql
+    static_configs:
+    - targets: ['0.0.0.0:9114']
+      labels:
+        alias: mysql_server
+  - job_name: nginx
+    static_configs:
+      - targets: ['0.0.0.0:9113']
+        labels:
+          alias: nginx_server
 EOF
-
-sudo firewall-cmd --add-port=9090/tcp --permanent
-sudo firewall-cmd --reload
 
 sudo cat << EOF > /etc/systemd/system/prometheus.service
 [Unit]
@@ -50,6 +58,9 @@ ExecStart=/usr/local/bin/prometheus \
 [Install]
 WantedBy=multi-user.target
 EOF
+
+sudo firewall-cmd --add-port=9110/tcp --permanent
+sudo firewall-cmd --reload
 
 sudo systemctl daemon-reload
 sudo systemctl start prometheus
