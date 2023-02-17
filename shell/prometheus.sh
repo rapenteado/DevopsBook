@@ -24,7 +24,7 @@ global:
 scrape_configs:
   - job_name: 'host_server'
     static_configs:
-    - targets: ['192.168.0.100:9110','192.168.0.110:9110','192.168.0.111:9110']
+    - targets: ['192.168.0.100:9200','192.168.0.110:9200','192.168.0.111:9200']
       labels:
         alias: host_server
   - job_name: mysql
